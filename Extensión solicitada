@@ -1,0 +1,46 @@
+  public Paciente(String nombre, String apellido, String id, int categoria, long tiempoLlegada, String estado, String area) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.id = id;
+        this.categoria = categoria;
+        this.tiempoLlegada = tiempoLlegada;
+        this.estado = estado;
+        this.area = area;
+        this.historialCambios = new Stack<>();
+    }
+
+    public long tiempoEsperaActual(long tiempoActual) {
+        return Math.max(0, (tiempoActual - this.tiempoLlegada) / (60 * 1000));
+    }
+
+    public void registrarCambio(String descripcion) {
+        historialCambios.push(descripcion);
+    }
+
+    public String obtenerUltimoCambio() {
+        if (!historialCambios.isEmpty()) {
+            return historialCambios.pop();
+        }
+        return "Sin cambios registrados";
+    }
+
+    public int prioridadAjustada(long tiempoActual) {
+        int penalizacion = (int) (tiempoEsperaActual(tiempoActual) / 10);
+        int prioridad = categoria - penalizacion;
+        if (prioridad < 1) prioridad = 1;
+        return prioridad;
+    }
+
+    @Override
+    public int compareTo(Paciente otro) {
+        long ahora = System.currentTimeMillis();
+        int prioridad1 = this.prioridadAjustada(ahora);
+        int prioridad2 = otro.prioridadAjustada(ahora);
+
+        if (prioridad1 != prioridad2) {
+            return Integer.compare(prioridad1, prioridad2);
+        }
+        return Long.compare(this.tiempoLlegada, otro.tiempoLlegada);
+    }
+
+}
