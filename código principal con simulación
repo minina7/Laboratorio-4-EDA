@@ -142,7 +142,7 @@ class Hospital {
     public void reasignarCategoria(String id, int nuevaCategoria) {
         Paciente p = pacientesTotales.get(id);
         if (p != null) {
-            p.registrarCambio("categoría cambiada" + p.getCategoria() + " a " + nuevaCategoria);
+            p.registrarCambio("categoria cambiada" + p.getCategoria() + " a " + nuevaCategoria);
             p.setCategoria(nuevaCategoria);
         }
     }
@@ -190,7 +190,7 @@ class GeneradorPacientes {
             String apellido = apellidos[random.nextInt(apellidos.length)];
             String id = "P" + (i + 1);
             int categoria = generarCategoriaPorProbabilidad();
-            long llegada_i = timestamp_inicio + (i * 600 * 1000); // Convertir a milisegundos
+            long llegada_i = timestamp_inicio + (i * 600 * 1000); 
             String area = areas[random.nextInt(areas.length)];
             String estado = "en_espera";
 
@@ -302,7 +302,7 @@ private Map<String, Long> tiemposAtencionPorPaciente;
             
             if (excedido && !pacientesExcedidos.contains(p)) {
                 pacientesExcedidos.add(p);
-                p.registrarCambio("Excedió tiempo máximo de espera para categoría " + p.getCategoria());
+                p.registrarCambio("Excedio tiempo maximo de espera para categoria " + p.getCategoria());
             }
         }
     }
@@ -326,7 +326,7 @@ private Map<String, Long> tiemposAtencionPorPaciente;
             System.out.printf("C%d: %.1f minutos\n", i, promedio);
         }
         
-        System.out.println("\nPacientes que excedieron tiempo máximo: " + pacientesExcedidos.size());
+        System.out.println("\nPacientes que excedieron tiempo maximo: " + pacientesExcedidos.size());
 
         System.out.println("\nTiempos de atención por paciente:");
 for (Map.Entry<String, Long> entry : tiemposAtencionPorPaciente.entrySet()) {
